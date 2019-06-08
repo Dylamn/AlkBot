@@ -10,11 +10,12 @@ module.exports = class Play extends Command {
     }
 
     static action (message) {
+        const file = Math.floor(Math.random() * 5 + 1);
         let voiceChannel = findAuthorVoiceChannel(this.getVoiceChannels(message), message);
 
         voiceChannel.join()
             .then((connection) => {
-                connection.playFile("./sounds/Alk_promo.mp3").on('end', () => {
+                connection.playFile(`./assets/sounds/${file}.mp3`).on('end', () => {
                     connection.disconnect();
                 });
             }).catch(console.error);
