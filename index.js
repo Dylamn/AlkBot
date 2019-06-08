@@ -1,9 +1,9 @@
 const Discord = require('discord.js');
 const bot = new Discord.Client();
 const config = require('./config');
+const commandsDispatcher = require('./commands/commandsDispatcher');
 
-console.log(config);
-
+// Log the bot
 bot.login(config.token)
     .catch(console.error);
 
@@ -13,9 +13,5 @@ bot.on('ready', () => {
 });
 
 bot.on('message', (message) => {
-    if (message.content === "!alk") {
-        //message.channel.send('P*te');
-        message.reply('p*te')
-            .catch(console.error); // mentions the nickname followed by a comma and the content
-    }
+    commandsDispatcher(message);
 });
