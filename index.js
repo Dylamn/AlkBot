@@ -2,6 +2,7 @@ const Discord = require('discord.js');
 const bot = new Discord.Client();
 const config = require('./config');
 const commandsDispatcher = require('./commands/commandsDispatcher');
+const welcomePute = require('./events/welcomePute');
 
 // Log the bot
 bot.login(config.token)
@@ -14,4 +15,8 @@ bot.on('ready', () => {
 
 bot.on('message', (message) => {
     commandsDispatcher(message);
+});
+
+bot.on('guildMemberAdd', (GuildMember) => {
+    welcomePute(GuildMember);
 });
