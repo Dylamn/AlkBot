@@ -1,17 +1,9 @@
+require('dotenv').config(); // loads the environment variables that will be accessible from process.env
+const Bot = require('./Bot');
 const Discord = require('discord.js');
 const bot = new Discord.Client();
-const config = require('./config');
-const commandsDispatcher = require('./commands/commandsDispatcher');
 
-// Log the bot
-bot.login(config.token)
-    .catch(console.error);
+const alkBot = new Bot(bot);
 
-bot.on('ready', () => {
-   bot.user.setActivity("P*te")
-       .catch(console.error);
-});
-
-bot.on('message', (message) => {
-    commandsDispatcher(message);
-});
+alkBot.start().then(r => console.log("AlkBot is ready !"))
+    .catch(e => console.log(e));

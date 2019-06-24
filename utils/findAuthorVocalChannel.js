@@ -8,7 +8,7 @@
 module.exports = function findAuthorVoiceChannel (voiceChannels, message) {
     return voiceChannels.find(channel => {
         return channel.members.find(guildMember => {
-            return guildMember.user === message.author;
+            return guildMember.user.id === message.author.id;
         })
     });
 };
