@@ -1,9 +1,9 @@
 const whoCallMe = require('./whoCallMe');
-const Play = require('./play');
 const types = require('./constants/commandsTypes');
+const { join } = require('path');
 
-module.exports = function dispatcher (message) {
-    switch (message.content) {
+module.exports = function dispatcher (command, message) {
+    switch (command.type) {
         case types.ALK: {
             message.reply('p*te')
                 .catch(console.error); // mentions the nickname followed by a comma and the content
@@ -11,8 +11,15 @@ module.exports = function dispatcher (message) {
             return;
         }
 
-        case types.ALK_PLAY: {
-            Play.action(message);
+        case types.TEST: {
+            console.log(message.content);
+
+            return;
+        }
+
+        case types.PLAY: {
+            require(`./${command.type}`).action(command, message);
+            // Play.action(message);
             message.delete()
                 .then(msg => console.log(`Deleted message from ${msg.author.username}`))
                 .catch(console.error);
@@ -21,7 +28,8 @@ module.exports = function dispatcher (message) {
         }
 
         default: {
-            whoCallMe.parse(message);
+            // TODO: commands help menu
+            console.log('Help menu will appear soon...');
         }
     }
 };
